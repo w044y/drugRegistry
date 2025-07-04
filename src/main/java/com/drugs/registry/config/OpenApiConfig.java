@@ -3,10 +3,6 @@
 // ================================
 package com.drugs.registry.config;
 
-
-
-
-
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -26,27 +22,15 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .servers(List.of(
-                        createServer("http://localhost:8080/pharma-registry", "Development server"),
-                        createServer("https://api.pharma-registry.com", "Production server")
-                ))
                 .info(new Info()
                         .title("Polish Pharmaceutical Products Registry API")
                         .description("API for managing Polish pharmaceutical products registry data")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Pharmaceutical Registry Team")
-                                .email("support@pharma-registry.com")
-                                .url("https://pharma-registry.com"))
+                                .email("support@pharma-registry.com"))
                         .license(new License()
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")));
-    }
-
-    private Server createServer(String url, String description) {
-        Server server = new Server();
-        server.setUrl(url);
-        server.setDescription(description);
-        return server;
     }
 }

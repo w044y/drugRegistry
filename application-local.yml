@@ -1,5 +1,5 @@
 # ================================
-# 1. application.yml
+# 1. application-local.yml
 # ================================
 server:
   port: 8080
