@@ -15,7 +15,7 @@ import java.util.Objects;
 public class MedicinalProduct {
 
     @Id
-    @Column(name = "product_id", length = 20)
+    @Column(name = "product_id", length = 50)
     private String productId;
 
     @Column(name = "product_name", length = 500, nullable = false)

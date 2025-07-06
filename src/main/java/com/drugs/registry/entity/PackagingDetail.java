@@ -17,13 +17,13 @@ public class PackagingDetail {
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private MedicinalProduct medicinalProduct;
 
-    @Column(name = "ean_code", length = 20)
+    @Column(name = "ean_code", length = 50)
     private String eanCode;
 
-    @Column(name = "prescription_type", length = 10)
+    @Column(name = "prescription_type", length = 50)
     private String prescriptionType;
 
-    @Column(name = "package_number", length = 20)
+    @Column(name = "package_number", length = 50)
     private String packageNumber;
 
     @Column(name = "package_size", length = 200)
