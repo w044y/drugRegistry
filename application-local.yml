@@ -1,6 +1,3 @@
-# ================================
-# 1. application-local.yml
-# ================================
 server:
   port: 8080
   servlet:
@@ -10,97 +7,42 @@ spring:
   application:
     name: pharmaceutical-registry
 
-  # Database Configuration
+  # PostgreSQL Database Configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/pharma_registry?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: ${DB_USERNAME:pharma_user}
-    password: ${DB_PASSWORD:pharma_pass}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: 20
-      minimum-idle: 5
-      idle-timeout: 300000
-      connection-timeout: 20000
-      max-lifetime: 1200000
+    url: jdbc:postgresql://localhost:5432/pharma_registry
+    username: postgres
+    password: admin123  # Use the password you set during installation
+    driver-class-name: org.postgresql.Driver
 
-  # JPA Configuration
+  # JPA Configuration for PostgreSQL
   jpa:
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.SnakeCasePhysicalNamingStrategy
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         jdbc:
           batch_size: 20
-        order_inserts: true
-        order_updates: true
-        generate_statistics: false
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   # File Upload Configuration
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-      enabled: true
-
-  # Liquibase (optional for database versioning)
-  liquibase:
-    enabled: false
-    change-log: classpath:db/changelog/db.changelog-master.xml
 
 # Logging Configuration
 logging:
   level:
     com.pharma.registry: DEBUG
     org.springframework.web: INFO
-    org.hibernate.SQL: WARN
-    org.hibernate.type.descriptor.sql.BasicBinder: WARN
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file:
-    name: logs/pharmaceutical-registry.log
+    org.hibernate.SQL: DEBUG
 
-# Management and Actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,prometheus
-  endpoint:
-    health:
-      show-details: when_authorized
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-
-# Custom Application Properties
-app:
-  import:
-    batch-size: 100
-    max-file-size: 50MB
-  search:
-    default-page-size: 20
-    max-page-size: 100
-
----
-# Development Profile
-spring:
-  config:
-    activate:
-      on-profile: dev
-
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  h2:
-    console:
+# OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

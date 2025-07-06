@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "product_substances")
-@Data
 public class ProductSubstance {
 
     @Id
@@ -23,4 +22,36 @@ public class ProductSubstance {
 
     @Column(name = "concentration", length = 200)
     private String concentration;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MedicinalProduct getMedicinalProduct() {
+        return medicinalProduct;
+    }
+
+    public void setMedicinalProduct(MedicinalProduct medicinalProduct) {
+        this.medicinalProduct = medicinalProduct;
+    }
+
+    public ActiveSubstance getActiveSubstance() {
+        return activeSubstance;
+    }
+
+    public void setActiveSubstance(ActiveSubstance activeSubstance) {
+        this.activeSubstance = activeSubstance;
+    }
+
+    public String getConcentration() {
+        return concentration;
+    }
+
+    public void setConcentration(String concentration) {
+        this.concentration = concentration;
+    }
 }

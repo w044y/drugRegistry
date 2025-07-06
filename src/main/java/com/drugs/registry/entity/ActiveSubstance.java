@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "active_substances")
-@Data
 @EqualsAndHashCode(exclude = "productSubstances")
 @ToString(exclude = "productSubstances")
 public class ActiveSubstance {
@@ -37,4 +36,52 @@ public class ActiveSubstance {
 
     @OneToMany(mappedBy = "activeSubstance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductSubstance> productSubstances;
+
+    public Long getSubstanceId() {
+        return substanceId;
+    }
+
+    public void setSubstanceId(Long substanceId) {
+        this.substanceId = substanceId;
+    }
+
+    public String getSubstanceName() {
+        return substanceName;
+    }
+
+    public void setSubstanceName(String substanceName) {
+        this.substanceName = substanceName;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public void setStrength(String strength) {
+        this.strength = strength;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<ProductSubstance> getProductSubstances() {
+        return productSubstances;
+    }
+
+    public void setProductSubstances(Set<ProductSubstance> productSubstances) {
+        this.productSubstances = productSubstances;
+    }
 }

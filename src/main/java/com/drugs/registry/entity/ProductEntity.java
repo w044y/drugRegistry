@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "product_entities")
-@Data
 public class ProductEntity {
 
     @Id
@@ -27,5 +26,37 @@ public class ProductEntity {
 
     public enum RelationshipType {
         RESPONSIBLE, MANUFACTURER, IMPORTER, MANUFACTURER_IMPORTER, EXPORT_RESPONSIBLE
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MedicinalProduct getMedicinalProduct() {
+        return medicinalProduct;
+    }
+
+    public void setMedicinalProduct(MedicinalProduct medicinalProduct) {
+        this.medicinalProduct = medicinalProduct;
+    }
+
+    public ResponsibleEntity getResponsibleEntity() {
+        return responsibleEntity;
+    }
+
+    public void setResponsibleEntity(ResponsibleEntity responsibleEntity) {
+        this.responsibleEntity = responsibleEntity;
+    }
+
+    public RelationshipType getRelationshipType() {
+        return relationshipType;
+    }
+
+    public void setRelationshipType(RelationshipType relationshipType) {
+        this.relationshipType = relationshipType;
     }
 }

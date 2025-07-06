@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "responsible_entities")
-@Data
 @EqualsAndHashCode(exclude = "productEntities")
 @ToString(exclude = "productEntities")
 public class ResponsibleEntity {
@@ -42,5 +41,53 @@ public class ResponsibleEntity {
 
     public enum EntityType {
         RESPONSIBLE, MANUFACTURER, IMPORTER, EXPORT_RESPONSIBLE
+    }
+
+    public Long getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public EntityType getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    public void setProductEntities(Set<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
     }
 }

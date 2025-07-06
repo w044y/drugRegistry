@@ -1,5 +1,5 @@
 // MedicinalProductRepository.java
-package com.drugs.registry.repositories;
+package com.drugs.registry.repository;
 
 import com.drugs.registry.entity.MedicinalProduct;
 import org.springframework.data.domain.Page;
@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MedicinalProductRepository extends JpaRepository<MedicinalProduct, String>,
+
+public interface MedicinalProductRepository extends JpaRepository<MedicinalProduct, Long>,
         JpaSpecificationExecutor<MedicinalProduct> {
+
 
     Page<MedicinalProduct> findByProductNameContainingIgnoreCase(String productName, Pageable pageable);
 
