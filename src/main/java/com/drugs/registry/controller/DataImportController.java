@@ -1,57 +1,70 @@
+// DataImportController.java
 package com.drugs.registry.controller;
 
 import com.drugs.registry.service.DataImportService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/v1/import")
+@RequestMapping("/api/import")
+@RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Data Import", description = "Operations for importing pharmaceutical data")
-@CrossOrigin(origins = "*")
 public class DataImportController {
-    @Autowired
+
     private final DataImportService dataImportService;
 
-    public DataImportController(DataImportService dataImportService) {
-        this.dataImportService = dataImportService;
-    }
-
     @PostMapping("/excel")
-    @Operation(summary = "Import pharmaceutical data from Excel file")
-    public ResponseEntity<String> importFromExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> importFromExcel(@RequestParam("file") MultipartFile file) {
         try {
-
-
             // Validate file
             if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body("File is empty");
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "File is empty"));
             }
 
-            if (!file.getOriginalFilename().endsWith(".xlsx")) {
-                return ResponseEntity.badRequest().body("Only .xlsx files are supported");
+            if (!isValidExcelFile(file)) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Invalid file format. Please upload an Excel file (.xlsx)"));
             }
 
-            // Call service to do the actual work
+            log.info("Starting import for file: {} (size: {} bytes)",
+                    file.getOriginalFilename(), file.getSize());
+
+            // Perform import
             int importedCount = dataImportService.importFromExcel(file);
 
-            String message = String.format("Successfully imported %d pharmaceutical products", importedCount);
+            // Return success response
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Import completed successfully");
+            response.put("importedCount", importedCount);
+            response.put("fileName", file.getOriginalFilename());
 
-            return ResponseEntity.ok(message);
+            log.info("Import completed successfully. Records imported: {}", importedCount);
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Import failed: " + e.getMessage());
+            log.error("Error during Excel import", e);
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Import failed: " + e.getMessage());
+
+            return ResponseEntity.internalServerError().body(errorResponse);
         }
     }
 
-    @GetMapping("/status")
-    @Operation(summary = "Get import service status")
-    public ResponseEntity<String> getImportStatus() {
-        return ResponseEntity.ok("Import service is ready");
+    private boolean isValidExcelFile(MultipartFile file) {
+        String filename = file.getOriginalFilename();
+        return filename != null && (
+                filename.toLowerCase().endsWith(".xlsx") ||
+                        filename.toLowerCase().endsWith(".xls")
+        );
     }
 }

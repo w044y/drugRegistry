@@ -33,8 +33,4 @@ public class MedicinalProductDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Related entities
-    private List<ResponsibleEntityDto> entities;
-    private List<ActiveSubstanceDto> substances;
-    private List<PackagingDetailDto> packagingDetails;
 }

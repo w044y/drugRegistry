@@ -6,8 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 @Entity
@@ -15,43 +13,43 @@ import java.util.Objects;
 public class MedicinalProduct {
 
     @Id
-    @Column(name = "product_id", length = 50)
+    @Column(name = "product_id", columnDefinition = "TEXT")
     private String productId;
 
-    @Column(name = "product_name", length = 500, nullable = false)
+    @Column(name = "product_name", columnDefinition = "TEXT", nullable = false)
     private String productName;
 
-    @Column(name = "common_name", length = 500)
+    @Column(name = "common_name", columnDefinition = "TEXT")
     private String commonName;
 
-    @Column(name = "preparation_type", length = 100)
+    @Column(name = "preparation_type", columnDefinition = "TEXT")
     private String preparationType;
 
     @Column(name = "animal_usage_ban")
     private Boolean animalUsageBan = false;
 
-    @Column(name = "previous_name", length = 500)
+    @Column(name = "previous_name", columnDefinition = "TEXT")
     private String previousName;
 
     @Column(name = "administration_route", columnDefinition = "TEXT")
     private String administrationRoute;
 
-    @Column(name = "strength", length = 200)
+    @Column(name = "strength", columnDefinition = "TEXT")
     private String strength;
 
-    @Column(name = "pharmaceutical_form", length = 200)
+    @Column(name = "pharmaceutical_form", columnDefinition = "TEXT")
     private String pharmaceuticalForm;
 
-    @Column(name = "procedure_type", length = 50)
+    @Column(name = "procedure_type", columnDefinition = "TEXT")
     private String procedureType;
 
-    @Column(name = "authorization_number", length = 50)
+    @Column(name = "authorization_number", columnDefinition = "TEXT")
     private String authorizationNumber;
 
-    @Column(name = "authorization_validity", length = 50)
+    @Column(name = "authorization_validity", columnDefinition = "TEXT")
     private String authorizationValidity;
 
-    @Column(name = "atc_code", length = 20)
+    @Column(name = "atc_code", columnDefinition = "TEXT")
     private String atcCode;
 
     @Column(name = "packaging", columnDefinition = "TEXT")
@@ -60,31 +58,31 @@ public class MedicinalProduct {
     @Column(name = "active_substance", columnDefinition = "TEXT")
     private String activeSubstance;
 
-    @Column(name = "legal_basis", length = 200)
+    @Column(name = "legal_basis", columnDefinition = "TEXT")
     private String legalBasis;
 
-    @Column(name = "leaflet_url", length = 500)
+    @Column(name = "leaflet_url", columnDefinition = "TEXT")
     private String leafletUrl;
 
-    @Column(name = "characteristics_url", length = 500)
+    @Column(name = "characteristics_url", columnDefinition = "TEXT")
     private String characteristicsUrl;
 
-    @Column(name = "labeling_leaflet_url", length = 500)
+    @Column(name = "labeling_leaflet_url", columnDefinition = "TEXT")
     private String labelingLeafletUrl;
 
-    @Column(name = "parallel_import_leaflet_url", length = 500)
+    @Column(name = "parallel_import_leaflet_url", columnDefinition = "TEXT")
     private String parallelImportLeafletUrl;
 
-    @Column(name = "parallel_import_labeling_url", length = 500)
+    @Column(name = "parallel_import_labeling_url", columnDefinition = "TEXT")
     private String parallelImportLabelingUrl;
 
-    @Column(name = "parallel_import_packaging_url", length = 500)
+    @Column(name = "parallel_import_packaging_url", columnDefinition = "TEXT")
     private String parallelImportPackagingUrl;
 
-    @Column(name = "educational_materials_professionals_url", length = 500)
+    @Column(name = "educational_materials_professionals_url", columnDefinition = "TEXT")
     private String educationalMaterialsProfessionalsUrl;
 
-    @Column(name = "educational_materials_patients_url", length = 500)
+    @Column(name = "educational_materials_patients_url", columnDefinition = "TEXT")
     private String educationalMaterialsPatientsUrl;
 
     @CreationTimestamp
@@ -94,16 +92,6 @@ public class MedicinalProduct {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    // Relationships - Initialize with empty sets to avoid null pointer exceptions
-    @OneToMany(mappedBy = "medicinalProduct", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<ProductEntity> productEntities = new HashSet<>();
-
-    @OneToMany(mappedBy = "medicinalProduct", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<ProductSubstance> productSubstances = new HashSet<>();
-
-    @OneToMany(mappedBy = "medicinalProduct", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<PackagingDetail> packagingDetails = new HashSet<>();
 
     // Default constructor (required by JPA)
     public MedicinalProduct() {}
@@ -321,61 +309,6 @@ public class MedicinalProduct {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Set<ProductEntity> getProductEntities() {
-        return productEntities;
-    }
-
-    public void setProductEntities(Set<ProductEntity> productEntities) {
-        this.productEntities = productEntities;
-    }
-
-    public Set<ProductSubstance> getProductSubstances() {
-        return productSubstances;
-    }
-
-    public void setProductSubstances(Set<ProductSubstance> productSubstances) {
-        this.productSubstances = productSubstances;
-    }
-
-    public Set<PackagingDetail> getPackagingDetails() {
-        return packagingDetails;
-    }
-
-    public void setPackagingDetails(Set<PackagingDetail> packagingDetails) {
-        this.packagingDetails = packagingDetails;
-    }
-
-    // Helper methods for relationships
-    public void addProductEntity(ProductEntity productEntity) {
-        productEntities.add(productEntity);
-        productEntity.setMedicinalProduct(this);
-    }
-
-    public void removeProductEntity(ProductEntity productEntity) {
-        productEntities.remove(productEntity);
-        productEntity.setMedicinalProduct(null);
-    }
-
-    public void addProductSubstance(ProductSubstance productSubstance) {
-        productSubstances.add(productSubstance);
-        productSubstance.setMedicinalProduct(this);
-    }
-
-    public void removeProductSubstance(ProductSubstance productSubstance) {
-        productSubstances.remove(productSubstance);
-        productSubstance.setMedicinalProduct(null);
-    }
-
-    public void addPackagingDetail(PackagingDetail packagingDetail) {
-        packagingDetails.add(packagingDetail);
-        packagingDetail.setMedicinalProduct(this);
-    }
-
-    public void removePackagingDetail(PackagingDetail packagingDetail) {
-        packagingDetails.remove(packagingDetail);
-        packagingDetail.setMedicinalProduct(null);
     }
 
     // equals and hashCode based on ID
