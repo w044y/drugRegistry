@@ -11,7 +11,7 @@
 	<groupId>com.drugs</groupId>
 	<artifactId>Drugs-Registry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>drugs-registry</name>
 	<description>Drug Registry API</description>
 	<url/>
 	<licenses>
