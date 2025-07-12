@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.drugs</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>Drugs-Registry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Drug Registry API</description>
